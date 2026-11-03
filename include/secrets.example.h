@@ -1,0 +1,6 @@
+#pragma once
+
+// Copy this file to secrets.h and fill in your WiFi credentials.
+#define WIFI_SSID "your-ssid"
+#define WIFI_PASSWORD "your-password"
+#define HOSTNAME "esp32cam"
