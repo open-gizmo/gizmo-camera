@@ -1,0 +1,48 @@
+{
+	"name": "gizmo-camera",
+	"version": "1.0.0",
+	"description": "Gizmo Camera web app, the device configuration UI embedded in the ESP32 firmware.",
+	"homepage": "https://github.com/open-gizmo/gizmo-camera",
+	"bugs": {
+		"url": "https://github.com/open-gizmo/gizmo-camera/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/open-gizmo/gizmo-camera.git"
+	},
+	"license": "MIT",
+	"author": "Mauro Brambilla",
+	"private": true,
+	"type": "module",
+	"engines": {
+		"node": ">=24.21.0"
+	},
+	"scripts": {
+		"dev": "nuxt dev",
+		"build": "nuxt generate",
+		"build:embedded": "nuxt generate && gizmo-embed .output/public ../microcontroller/src/webui",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@brumaombra/ui-vintage": "0.9.44",
+		"@hugeicons/core-free-icons": "4.3.5",
+		"@hugeicons/vue": "1.0.8",
+		"@nuxtjs/i18n": "10.6.0",
+		"nuxt": "4.5.2"
+	},
+	"devDependencies": {
+		"@nuxt/test-utils": "4.3.2",
+		"@tailwindcss/vite": "4.2.4",
+		"@vue/test-utils": "2.5.1",
+		"gizmo-common": "github:open-gizmo/gizmo-common#v2.4.0",
+		"happy-dom": "20.14.5",
+		"tailwindcss": "4.2.4",
+		"vitest": "5.0.1"
+	},
+	"allowScripts": {
+		"esbuild": true,
+		"vue-demi": true
+	}
+}

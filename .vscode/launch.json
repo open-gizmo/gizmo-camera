@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "request": "launch",
+            "name": "Debug Nuxt",
+            "command": "npm run dev",
+            "cwd": "${workspaceFolder}/webapp"
+        },
+        {
+            "type": "node-terminal",
+            "request": "launch",
+            "name": "Build Embedded Web UI",
+            "command": "npm run build:embedded",
+            "cwd": "${workspaceFolder}/webapp"
+        }
+    ]
+}

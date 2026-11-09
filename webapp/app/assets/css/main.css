@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "@brumaombra/ui-vintage/style.css";
+@import "gizmo-common/web/app/assets/css/gizmo.css";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/******************** Page transition ********************/
+
+/* The new page fades in (the library animation) while the old one goes at once, so the two never show stacked and an interrupted navigation never waits on a leaving page */
+.page-leave-active {
+	display: none;
+	transition: none;
+}

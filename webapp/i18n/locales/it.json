@@ -1,0 +1,65 @@
+{
+    "app": {
+        "loadError": "Si è verificato un errore durante il caricamento dei dati"
+    },
+    "common": {
+        "redirectingCamera": "Apertura della fotocamera...",
+        "syncingDevice": "Sincronizzazione del dispositivo..."
+    },
+    "nav": {
+        "camera": {
+            "label": "Fotocamera",
+            "description": "Scatta foto e scegline la qualità"
+        }
+    },
+    "api": {
+        "backendErrors": {
+            "invalid_resolution": "Il dispositivo non conosce questa risoluzione.",
+            "resolution_not_supported": "Il sensore non può scattare foto a questa risoluzione. Scegline una più piccola.",
+            "invalid_quality": "La qualità deve essere un numero intero da 4 a 63.",
+            "invalid_flash": "L'impostazione del flash non è valida.",
+            "camera_busy": "La fotocamera sta scattando un'altra foto. Riprova tra un momento.",
+            "camera_unavailable": "Il sensore della fotocamera non si è avviato. Controlla il cavo flat, poi riavvia il dispositivo.",
+            "capture_failed": "La fotocamera non è riuscita a scattare la foto. Riprova."
+        }
+    },
+    "pages": {
+        "camera": {
+            "title": "Fotocamera",
+            "emptyTitle": "Ancora nessuna foto",
+            "emptyDescription": "Scatta una foto per vedere cosa vede la fotocamera.",
+            "snapshotAlt": "Ultima foto della fotocamera",
+            "snapshotDetails": "{resolution} · {size} · scattata in {time} ms",
+            "snapshotAction": "Scatta foto",
+            "downloadAction": "Salva foto",
+            "takingSnapshot": "Scatto in corso...",
+            "snapshotError": "Si è verificato un errore durante lo scatto",
+            "optionsTitle": "Scatto",
+            "optionsHint": "Sensore {sensor}. Le foto più grandi e nitide impiegano di più ad arrivare.",
+            "resolution": {
+                "label": "Risoluzione",
+                "note": "La dimensione della foto in pixel."
+            },
+            "quality": {
+                "label": "Qualità",
+                "note": "Le foto più nitide sono file più grandi.",
+                "best": "Massima",
+                "bestMeta": "La più nitida, file più grandi",
+                "high": "Alta",
+                "highMeta": "Nitida, quella predefinita",
+                "medium": "Media",
+                "mediumMeta": "File più piccoli, un po' meno nitida",
+                "low": "Bassa",
+                "lowMeta": "File più piccoli, visibilmente meno nitida"
+            },
+            "flash": {
+                "label": "Flash"
+            },
+            "unavailableTitle": "Fotocamera non trovata",
+            "unavailableDescription": "Il sensore della fotocamera non si è avviato. Controlla che il cavo flat sia inserito fino in fondo e bloccato, poi riavvia il dispositivo.",
+            "loadErrorTitle": "Impossibile leggere la fotocamera",
+            "loadErrorDescription": "Il dispositivo non ha risposto. Controlla che sia acceso e sulla stessa rete, poi riprova.",
+            "loadRetryAction": "Riprova"
+        }
+    }
+}
