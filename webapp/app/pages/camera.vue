@@ -8,7 +8,9 @@ import FlashIcon from '@hugeicons/core-free-icons/FlashIcon';
 import Image01Icon from '@hugeicons/core-free-icons/Image01Icon';
 import ImageCompositionIcon from '@hugeicons/core-free-icons/ImageCompositionIcon';
 import RefreshIcon from '@hugeicons/core-free-icons/RefreshIcon';
+import RoboticIcon from '@hugeicons/core-free-icons/RoboticIcon';
 import AspectRatioIcon from '@hugeicons/core-free-icons/AspectRatioIcon';
+import BookOpen01Icon from '@hugeicons/core-free-icons/BookOpen01Icon';
 import { HugeiconsIcon } from '@hugeicons/vue';
 import { setBusy } from '@brumaombra/ui-vintage/busy-indicator';
 import { Button } from '@brumaombra/ui-vintage/button';
@@ -58,6 +60,12 @@ const snapshotDetails = computed(() => {
     return t('pages.camera.snapshotDetails', { resolution: snapshot.value.resolution, size, time: snapshot.value.captureTimeMs });
 });
 
+// Address of the MCP server, as this browser reached the device (an agent on the same network uses the same one)
+const mcpUrl = computed(() => `${window.location.origin}/mcp`);
+
+// Help under the agents group: the command that adds the camera to Claude Code
+const agentsHint = computed(() => t('pages.camera.agents.hint', { command: `claude mcp add --transport http gizmo-camera ${mcpUrl.value}` }));
+
 // Read the camera, showing the busy indicator meanwhile
 const readCamera = async () => {
     try {
@@ -102,6 +110,11 @@ const handleDownloadPress = () => {
     link.href = snapshot.value.url;
     link.download = buildSnapshotFileName();
     link.click();
+};
+
+// Open the guide for AI agents in a new tab
+const handleAgentGuidePress = () => {
+    window.open('/llms.txt', '_blank', 'noopener');
 };
 
 // Read the camera when the page opens (once: the store keeps it across pages)
@@ -167,6 +180,12 @@ definePageMeta({
                 </ListRow>
             </ListGroup>
         </template>
+
+        <!-- AI agents: the MCP server and the guide they read -->
+        <ListGroup :title="t('pages.camera.agents.title')" :hint="agentsHint">
+            <ListRow :label="t('pages.camera.agents.mcpLabel')" :icon="RoboticIcon" :value="mcpUrl" wrap-value />
+            <ListRow :label="t('pages.camera.agents.guideLabel')" :icon="BookOpen01Icon" action @click="handleAgentGuidePress" />
+        </ListGroup>
 
         <!-- Device info, network, restart and forget network (from the gizmo-common layer, it reads the device by itself) -->
         <GizmoDeviceCard />

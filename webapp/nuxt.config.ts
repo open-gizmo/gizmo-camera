@@ -13,7 +13,10 @@ export default defineNuxtConfig({
         head: {
             title: 'Gizmo Camera',
             link: [
-                { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }
+                { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
+
+                // Guide for AI agents, in the raw HTML (an agent that doesn't run the app still finds it)
+                { rel: 'alternate', type: 'text/markdown', href: '/llms.txt', title: 'Guide for AI agents' }
             ]
         },
 

@@ -137,6 +137,16 @@ describe('camera page', () => {
         expect(wrapper.text()).toContain('No snapshot yet');
     });
 
+    // Agents connect through the MCP server at the address the browser used, and the page says how
+    it('shows how to connect an AI agent', async () => {
+        const wrapper = await mountSuspended(CameraPage);
+        await vi.waitFor(() => expect(wrapper.text()).toContain('AI agents'));
+        const mcpUrl = `${window.location.origin}/mcp`;
+        expect(wrapper.text()).toContain(mcpUrl);
+        expect(wrapper.text()).toContain(`claude mcp add --transport http gizmo-camera ${mcpUrl}`);
+        expect(wrapper.text()).toContain('Guide for agents');
+    });
+
     // A sensor that didn't start gets an explanation instead of a snapshot button that can only fail
     it('explains a camera that did not start', async () => {
         camera.available = false;

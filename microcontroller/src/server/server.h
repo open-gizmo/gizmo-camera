@@ -14,7 +14,12 @@ using gizmo::sendSuccessResponse;
 // Web server routes (the Wi-Fi setup routes are registered by gizmo-common)
 void setupCameraGetRoute();
 void setupCaptureGetRoute();
+void setupMcpRoute();
+void setupAgentGuideRoute();
 void setupCaptivePortalRoute();
+
+// Send the guide for AI agents (Markdown)
+void sendAgentGuide(AsyncWebServerRequest *request);
 
 // Server setup
 void setupRoutes();

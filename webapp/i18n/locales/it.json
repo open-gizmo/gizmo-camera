@@ -59,7 +59,13 @@
             "unavailableDescription": "Il sensore della fotocamera non si è avviato. Controlla che il cavo flat sia inserito fino in fondo e bloccato, poi riavvia il dispositivo.",
             "loadErrorTitle": "Impossibile leggere la fotocamera",
             "loadErrorDescription": "Il dispositivo non ha risposto. Controlla che sia acceso e sulla stessa rete, poi riprova.",
-            "loadRetryAction": "Riprova"
+            "loadRetryAction": "Riprova",
+            "agents": {
+                "title": "Agenti AI",
+                "mcpLabel": "Server MCP",
+                "guideLabel": "Guida per gli agenti",
+                "hint": "Gli agenti AI su questa rete possono vedere attraverso la fotocamera. Per aggiungerla a Claude Code, esegui: {command}"
+            }
         }
     }
 }

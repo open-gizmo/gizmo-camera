@@ -4,7 +4,7 @@
 
 ### A Wi-Fi snapshot camera for the ESP32-CAM
 
-Gizmo Camera is a two-part project that turns an AI Thinker ESP32-CAM into a small Wi-Fi camera: ESP32 firmware that takes JPEG snapshots on request, and a Nuxt 4 web app, built into the firmware, to set it up and take photos from your phone.
+Gizmo Camera is a two-part project that turns an AI Thinker ESP32-CAM into a small Wi-Fi camera that people and AI agents can look through: ESP32 firmware that takes JPEG snapshots on request and is an MCP server, and a Nuxt 4 web app, built into the firmware, to set it up and take photos from your phone.
 
 <p>
   <a href="https://github.com/open-gizmo/gizmo-camera"><img alt="GitHub Repo" src="https://img.shields.io/badge/github-open--gizmo%2Fgizmo--camera-111111?logo=github"></a>
@@ -15,7 +15,7 @@ Gizmo Camera is a two-part project that turns an AI Thinker ESP32-CAM into a sma
 </p>
 
 <p>
-  📡 Wi-Fi setup from the phone • 📸 JPEG snapshots up to 1600 × 1200 • 🔦 Flash LED • 🌐 Simple HTTP API • 🌍 EN/IT UI
+  📡 Wi-Fi setup from the phone • 📸 JPEG snapshots up to 1600 × 1200 • 🔦 Flash LED • 🤖 MCP server for AI agents • 🌐 Simple HTTP API • 🌍 EN/IT UI
 </p>
 
 <p>
@@ -36,11 +36,11 @@ Gizmo Camera is a two-part project that turns an AI Thinker ESP32-CAM into a sma
 <a id="overview"></a>
 ## 📘 Overview
 
-Gizmo Camera gives a cheap ESP32-CAM module a proper job: a camera on your network that answers every request with a fresh photo. Point it at a 3D printer, a plant, a door or a parking spot, and anything that can make an HTTP request (a browser, a script, a home automation server, an AI agent) can see what it sees.
+Gizmo Camera gives a cheap ESP32-CAM module a proper job: a camera on your network that answers every request with a fresh photo. Point it at a 3D printer, a plant, a door or a parking spot, and anything that can make an HTTP request (a browser, a script, a home automation server) can see what it sees. AI agents get it as an MCP server: they connect to it and call `take_snapshot` to look through it.
 
 You flash it from the browser, join its setup hotspot from your phone, pick your Wi-Fi network, and it's ready. No IDE, no credentials in the code. The web app built into the firmware lets you take snapshots, choose their resolution and quality, turn on the flash, and save the photos.
 
-Under the hood, every snapshot is a plain `GET /api/capture` request that returns a JPEG, so the same camera works just as well from a script as from the web app.
+Under the hood, every snapshot is a plain `GET /api/capture` request that returns a JPEG, so the same camera works just as well from a script as from the web app. For agents, the camera explains itself: its root page answers in Markdown to clients that ask for it, and `/llms.txt` has the same guide.
 
 <a id="images"></a>
 ## 🖼️ Images
@@ -73,6 +73,7 @@ Under the hood, every snapshot is a plain `GET /api/capture` request that return
 - Adjustable JPEG quality, and the on-board flash LED for dark scenes.
 - ESP32 firmware with Wi-Fi setup, an embedded HTTP server, and the web app built in.
 - A small HTTP API (`/api/camera`, `/api/capture`) that scripts and other devices can call directly.
+- An MCP server at `/mcp` for AI agents (Claude Code and other MCP clients), with `take_snapshot` returning the photo as an image the agent can look at, and a Markdown guide for agents at `/llms.txt`.
 - Nuxt 4 interface to take snapshots, choose their options, and save the photos.
 - `@brumaombra/ui-vintage` UI system shared across layout, forms, dialogs, and overlays.
 - English and Italian localization.
@@ -90,9 +91,9 @@ Gizmo Camera is built around three cooperating parts:
 
 ### 🔄 Data Flow
 
-1. The web app (or any HTTP client) asks the ESP32 for a snapshot with `GET /api/capture`, with its resolution, quality and flash.
+1. The web app (or any HTTP client) asks the ESP32 for a snapshot with `GET /api/capture`, with its resolution, quality and flash. An AI agent asks the same through the MCP server, by calling `take_snapshot`.
 2. The firmware applies the options to the sensor, turns on the flash if asked, and takes a fresh frame.
-3. The JPEG is streamed straight from the camera's frame buffer to the client, with its resolution and capture time in the response headers.
+3. The JPEG is streamed straight from the camera's frame buffer to the client, with its resolution and capture time in the response headers. For an agent, it is streamed as base64 inside the MCP result, still without a copy of the photo.
 
 <a id="quick-start"></a>
 ## 🚀 Quick Start
@@ -219,13 +220,14 @@ The firmware is split into focused modules under `microcontroller/src/`:
 
 - 📷 `camera/` starts the sensor and takes snapshots (`camera.*`), with the resolutions and the reading of the request options kept hardware-free in `capture_options.*`. The pins are in `camera_pins.h`.
 - ⚙️ `config/` holds the project name and the shared web server.
-- 🌐 `server/` exposes the embedded HTTP routes (`/api/camera`, `/api/capture`, and the web app).
+- 🤖 `mcp/` is the MCP server (`mcp_protocol.*`), the base64 encoder that streams the photo into its results (`base64_stream.*`), and the guide for agents (`agent_guide.*`), all hardware-free.
+- 🌐 `server/` exposes the embedded HTTP routes (`/api/camera`, `/api/capture`, `/mcp`, `/llms.txt`, and the web app).
 - 🧾 `serial/` turns on the serial log in the debug build.
 - 🔌 `wifi/` gives the camera's names to the shared Wi-Fi setup.
 
 ### 🧪 Tests
 
-The hardware-free logic (the resolutions, and how the options of a snapshot request are read and checked) is tested on your computer, no board needed:
+The hardware-free logic (the resolutions and the options of a snapshot request, the MCP server, the base64 streaming and the guide for agents) is tested on your computer, no board needed:
 
 ```bash
 cd microcontroller
@@ -250,6 +252,7 @@ Logging, the web API helpers, the device API and the whole Wi-Fi setup (connecti
 The Nuxt app provides the browser-based setup and camera interface.
 
 - Lets users configure Wi-Fi and take snapshots.
+- Shows the MCP address of the camera and the command to add it to Claude Code, and links to the guide for agents.
 - Offers the resolutions the sensor can take, a few quality presets, and the flash.
 - Shows the last snapshot with its resolution, size and capture time, and saves it as a JPEG file.
 - Supports English and Italian localization.
@@ -303,6 +306,31 @@ curl -o photo.jpg "http://gizmo-camera.local/api/capture?resolution=SVGA"
 
 The camera takes one snapshot at a time: a request that arrives while another is being taken or sent gets `503` with the `camera_busy` error. Errors are JSON, in the format of every OpenGizmo device: `{ "errorId": "invalid_quality", "errorMessage": "...", "data": null }`.
 
+### MCP server for AI agents
+
+The camera is a [Model Context Protocol](https://modelcontextprotocol.io) server, with the Streamable HTTP transport at `http://gizmo-camera.local/mcp`. Add it to Claude Code with:
+
+```sh
+claude mcp add --transport http gizmo-camera http://gizmo-camera.local/mcp
+```
+
+Use the camera's IP address instead of `gizmo-camera.local` if your computer doesn't resolve mDNS names. The camera page of the web app shows the exact address and command.
+
+| Tool | What it does |
+| --- | --- |
+| `take_snapshot` | Takes a new photo and returns it as an image, with a line of details (size, capture time). Optional arguments: `resolution` (`SVGA` by default for agents), `quality` (4 to 63) and `flash` (`true` or `false`). |
+| `get_camera_info` | The sensor, its resolutions, the quality range and the flash, as structured content and as JSON text. |
+
+- The server speaks the current 2026-07-28 revision of MCP (stateless, with the version in each request) and the earlier ones that open with `initialize` (2025-11-25, 2025-06-18, 2025-03-26), which most clients still use.
+- Every answer is plain JSON: no event streams and no sessions, so `GET` and `DELETE` on `/mcp` answer `405`.
+- Wrong argument values (an unknown resolution, a quality out of range) come back as tool errors the agent can read and fix.
+- The photo travels as base64 inside the JSON result, as MCP requires, so it is about a third bigger on the wire than the JPEG. That costs a little Wi-Fi time, not tokens: a model is charged for the image's pixels. The bigger lever is the resolution, which is why agents get SVGA by default.
+- Like the rest of the API, the MCP server only answers on the camera's own name or address, refuses other websites (`Origin`), and has no authentication: anyone on your network can use it. Don't expose it to the internet.
+
+### Guide for AI agents
+
+The camera describes itself in Markdown for agents that read before they connect: how to use the MCP server, the plain HTTP API, and tips, with the address the agent used already filled in. It is served at `/llms.txt`, at `/` to clients whose `Accept` header asks for `text/markdown` before `text/html` (browsers still get the web app), and every page of the web app links to it with `<link rel="alternate" type="text/markdown">`.
+
 ### Firmware Defaults
 
 Each snapshot starts from these defaults, unless its request says otherwise:
@@ -324,7 +352,9 @@ The device is configured through its embedded web UI and local network flow.
 
 - `microcontroller/src/camera/camera.cpp` for the sensor setup and the snapshots.
 - `microcontroller/src/camera/capture_options.h` for the resolutions and the quality range.
-- `microcontroller/src/server/endpoints/` for the camera API.
+- `microcontroller/src/server/endpoints/` for the camera API, the MCP endpoint and the guide for agents.
+- `microcontroller/src/mcp/mcp_protocol.cpp` for the MCP server: its versions, tools and errors.
+- `microcontroller/src/mcp/agent_guide.cpp` for the Markdown guide for agents.
 - `webapp/app/composables/useDeviceApi.js` for browser-to-device communication.
 
 ### Releasing a new version
@@ -347,6 +377,7 @@ The workflow only runs on `main`, and needs these secrets, on the repository or 
 - The web UI does not open after joining Wi-Fi: make sure your phone or computer is on the same network as the camera and try the `gizmo-camera.local` hostname if your router supports mDNS, or the IP address shown by your router.
 - Snapshots are slow at full resolution: a 1600 × 1200 JPEG is a few hundred KB over Wi-Fi. Pick a smaller resolution or a lower quality when you don't need every detail.
 - A request answers `camera_busy`: another snapshot was being taken or sent at the same moment. Try again once it's done.
+- An AI agent can't connect to the MCP server: check that the computer running the agent is on the same network as the camera, and use the camera's IP address in the MCP URL if `gizmo-camera.local` doesn't resolve there. Agents in the cloud (for example connectors added on claude.ai) can't reach a camera on your home network.
 - The AP setup flow never appears: power-cycle the device and check the firmware logs (the `debug` build profile) for Wi-Fi connection errors.
 
 <a id="license"></a>
