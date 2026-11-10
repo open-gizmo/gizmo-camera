@@ -260,7 +260,7 @@ The Nuxt app provides the browser-based setup and camera interface.
 - Includes library-managed busy and message flows for snapshots and errors.
 - Keeps device API helpers and camera state in `webapp/app/composables/`.
 - Uses static generation for the embedded web UI bundle that is packaged into firmware assets.
-- During development (`npm run dev`), a mock device in `webapp/server/` answers like the firmware, with an SVG test card in place of the photo.
+- During development (`npm run dev`), a mock device in `webapp/server/` answers like the firmware, with a test card in place of the photo. It includes the MCP server, so you can work on agents without the board (see [MCP server for AI agents](#mcp-server-for-ai-agents)).
 
 #### 🎨 UI System
 
@@ -315,6 +315,8 @@ claude mcp add --transport http gizmo-camera http://gizmo-camera.local/mcp
 ```
 
 Use the camera's IP address instead of `gizmo-camera.local` if your computer doesn't resolve mDNS names. The camera page of the web app shows the exact address and command.
+
+No board at hand? The web app's development server has the same MCP server, with a PNG test card (color bars and a marker that moves with the clock) instead of the photo. Start it with `npm run dev` in `webapp/`, then add it with `claude mcp add --transport http gizmo-camera-dev http://localhost:3000/mcp`.
 
 | Tool | What it does |
 | --- | --- |
