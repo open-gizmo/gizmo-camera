@@ -112,7 +112,7 @@ Use this path if you just want to flash the prebuilt firmware from the website. 
 
 4. **Press the "Flash firmware" button in the card to start the upload.**
 
-	If the flasher can't connect, hold the **IO0** button of the MB board, press and release **RST**, then release **IO0** and try again: this puts the ESP32 in flashing mode by hand.
+	If the flasher can't connect, hold the **IO0** button of the MB board, press and release **RST**, then release **IO0** and try again: this puts the ESP32 in flashing mode by hand. In the 3D-printed enclosure, press them with a paperclip through the pinholes in its long sides, one on each side.
 
 5. **Wait until the flashing process completes, then press RST on the MB board.**
 
