@@ -66,6 +66,17 @@ Under the hood, every snapshot is a plain `GET /api/capture` request that return
 	</p>
 </div>
 
+### Enclosure
+
+<div align="center">
+	<img src="https://raw.githubusercontent.com/open-gizmo/gizmo-camera/main/docs/enclosure-render.webp" alt="The Gizmo Camera enclosure on its ball-joint stand, and pulled apart into the shell, the ESP32-CAM on its MB board, the back plate, four M3 screws and the stand" width="800">
+	<br><br>
+	<img src="https://raw.githubusercontent.com/open-gizmo/gizmo-camera/main/docs/enclosure-blueprint.webp" alt="A blueprint of the Gizmo Camera enclosure, with a callout for each detail" width="800">
+	<p>
+		<sub>The two-color printed enclosure: a white shell with the lens and flash windows, an orange back plate closed by four M3 screws, and a ball-joint stand that tilts and pans</sub>
+	</p>
+</div>
+
 <a id="features"></a>
 ## ✨ Features
 
