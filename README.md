@@ -7,6 +7,10 @@
 Gizmo Camera is a two-part project that turns an AI Thinker ESP32-CAM into a small Wi-Fi camera that people and AI agents can look through: ESP32 firmware that takes JPEG snapshots on request and is an MCP server, and a Nuxt 4 web app, built into the firmware, to set it up and take photos from your phone.
 
 <p>
+  <a href="https://opengizmo.dev/projects/gizmo-camera"><img alt="The Gizmo Camera in its white and orange printed enclosure on its ball-joint stand, and pulled apart into the shell, the ESP32-CAM on its MB board, the back plate, four M3 screws and the stand" src="docs/enclosure-render.webp" width="800"></a>
+</p>
+
+<p>
   <a href="https://github.com/open-gizmo/gizmo-camera"><img alt="GitHub Repo" src="https://img.shields.io/badge/github-open--gizmo%2Fgizmo--camera-111111?logo=github"></a>
   <img alt="ESP32" src="https://img.shields.io/badge/esp32-ESP32-E7352C?logo=espressif&logoColor=white">
   <img alt="PlatformIO" src="https://img.shields.io/badge/platformio-PlatformIO-FF6B35?logo=platformio&logoColor=white">
@@ -19,6 +23,7 @@ Gizmo Camera is a two-part project that turns an AI Thinker ESP32-CAM into a sma
 </p>
 
 <p>
+	<a href="#enclosure"><strong>Enclosure</strong></a> •
 	<a href="#overview"><strong>Overview</strong></a> •
 	<a href="#images"><strong>Images</strong></a> •
 	<a href="#features"><strong>Features</strong></a> •
@@ -31,6 +36,16 @@ Gizmo Camera is a two-part project that turns an AI Thinker ESP32-CAM into a sma
 	<a href="#license"><strong>License</strong></a>
 </p>
 
+</div>
+
+<a id="enclosure"></a>
+## 📐 Enclosure
+
+<div align="center">
+	<img src="docs/enclosure-blueprint.webp" alt="A blueprint of the Gizmo Camera enclosure, with a callout for each detail" width="800">
+	<p>
+		<sub>The two-color printed enclosure: a white shell with the lens and flash windows, an orange back plate closed by four M3 screws, and a ball-joint stand that tilts and pans</sub>
+	</p>
 </div>
 
 <a id="overview"></a>
@@ -66,16 +81,6 @@ Under the hood, every snapshot is a plain `GET /api/capture` request that return
 	</p>
 </div>
 
-### Enclosure
-
-<div align="center">
-	<img src="https://raw.githubusercontent.com/open-gizmo/gizmo-camera/main/docs/enclosure-render.webp" alt="The Gizmo Camera enclosure on its ball-joint stand, and pulled apart into the shell, the ESP32-CAM on its MB board, the back plate, four M3 screws and the stand" width="800">
-	<br><br>
-	<img src="https://raw.githubusercontent.com/open-gizmo/gizmo-camera/main/docs/enclosure-blueprint.webp" alt="A blueprint of the Gizmo Camera enclosure, with a callout for each detail" width="800">
-	<p>
-		<sub>The two-color printed enclosure: a white shell with the lens and flash windows, an orange back plate closed by four M3 screws, and a ball-joint stand that tilts and pans</sub>
-	</p>
-</div>
 
 <a id="features"></a>
 ## ✨ Features
