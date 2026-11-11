@@ -66,13 +66,13 @@ Under the hood, every snapshot is a plain `GET /api/capture` request that return
 	<table>
 		<tr>
 			<td align="center" valign="top">
-				<img src="https://raw.githubusercontent.com/open-gizmo/gizmo-camera/main/docs/screenshot-camera.png" alt="Camera screen" width="180">
+				<img src="docs/screenshot-camera.png" alt="Camera screen" width="180">
 			</td>
 			<td align="center" valign="top">
-				<img src="https://raw.githubusercontent.com/open-gizmo/gizmo-camera/main/docs/screenshot-snapshot.png" alt="Snapshot screen" width="180">
+				<img src="docs/screenshot-snapshot.png" alt="Snapshot screen" width="180">
 			</td>
 			<td align="center" valign="top">
-				<img src="https://raw.githubusercontent.com/open-gizmo/gizmo-camera/main/docs/screenshot-wifi.png" alt="WiFi setup screen" width="180">
+				<img src="docs/screenshot-wifi.png" alt="WiFi setup screen" width="180">
 			</td>
 		</tr>
 	</table>
