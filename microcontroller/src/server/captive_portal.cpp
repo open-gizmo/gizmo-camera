@@ -16,7 +16,7 @@ namespace {
 void setupCaptivePortalRoute() {
 	server.onNotFound([](AsyncWebServerRequest *request) {
 		// Redirect hotspot clients to the Wi-Fi setup page
-		if (gizmo::handleCaptivePortalRequest(request)) {
+		if (gizmo::handleCaptivePortalRequest(request, EMBEDDED_ASSETS, EMBEDDED_ASSET_COUNT)) {
 			return;
 		}
 
