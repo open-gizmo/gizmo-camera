@@ -23,7 +23,7 @@ describe('pages of the layer', () => {
         const items = await readNavItems();
         expect(items.map(item => [item.id, item.label, item.to])).toEqual([
             ['camera', 'Camera', '/camera'],
-            ['settings', 'Settings', '/settings'],
+            ['device', 'Device', '/device'],
             ['wifi', 'WiFi', '/wifi']
         ]);
     });

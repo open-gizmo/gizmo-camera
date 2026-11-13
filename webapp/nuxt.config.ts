@@ -72,7 +72,7 @@ export default defineNuxtConfig({
             routes: [
                 '/',
                 '/camera',
-                '/settings'
+                '/device'
             ]
         }
     },

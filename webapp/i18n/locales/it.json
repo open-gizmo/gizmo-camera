@@ -11,8 +11,8 @@
             "label": "Fotocamera",
             "description": "Scatta foto e scegline la qualità"
         },
-        "settings": {
-            "label": "Impostazioni",
+        "device": {
+            "label": "Dispositivo",
             "description": "Info del dispositivo, rete e riavvio"
         }
     },
@@ -71,8 +71,8 @@
                 "hint": "Gli agenti AI su questa rete possono vedere attraverso la fotocamera. Per aggiungerla a Claude Code, esegui: {command}"
             }
         },
-        "settings": {
-            "title": "Impostazioni"
+        "device": {
+            "title": "Dispositivo"
         }
     }
 }

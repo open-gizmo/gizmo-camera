@@ -11,8 +11,8 @@
             "label": "Camera",
             "description": "Take snapshots and choose their quality"
         },
-        "settings": {
-            "label": "Settings",
+        "device": {
+            "label": "Device",
             "description": "Device info, network and restart"
         }
     },
@@ -71,8 +71,8 @@
                 "hint": "AI agents on this network can see through the camera. To add it to Claude Code, run: {command}"
             }
         },
-        "settings": {
-            "title": "Settings"
+        "device": {
+            "title": "Device"
         }
     }
 }

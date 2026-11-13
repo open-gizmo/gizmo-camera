@@ -284,7 +284,7 @@ The web app splits UI responsibilities between the shared packages and the app i
 
 - `@brumaombra/ui-vintage` provides the reusable UI system.
 - The gizmo-common web layer provides the dashboard layout, the Wi-Fi pages, the device card, and the mock device for the Wi-Fi and device routes.
-- `webapp/app/pages/camera.vue` is the camera page, `webapp/app/pages/settings.vue` holds the device card, and `webapp/app/app.config.ts` sets the name, logo and navigation for the layer.
+- `webapp/app/pages/camera.vue` is the camera page, `webapp/app/pages/device.vue` holds the device card, and `webapp/app/app.config.ts` sets the name, logo and navigation for the layer.
 - `webapp/app/assets/css/main.css` imports the shared library and layer stylesheets.
 - `webapp/app/composables/useCamera.js` and `webapp/app/composables/stores/useGlobalStore.js` keep the camera details, the snapshot options and the last snapshot local to the app.
 
