@@ -40,6 +40,6 @@ describe('pages of the layer', () => {
         registerEndpoint('/api/networks', () => ({ errorId: null, errorMessage: null, data: { networks: [] } }));
         const wrapper = await mountSuspended(ApSetupPage);
         expect(wrapper.text()).toContain('Gizmo Camera');
-        expect(wrapper.find('img').attributes('src')).toBe('/logo.svg');
+        expect(wrapper.find('img').attributes('src')).toBe('/images/logo/gizmo-camera-mark.svg');
     });
 });

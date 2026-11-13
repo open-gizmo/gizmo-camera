@@ -8,7 +8,8 @@ export default defineAppConfig({
         // mDNS name of the firmware (http://gizmo-camera.local)
         hostname: 'gizmo-camera',
 
-        logo: '/logo.svg',
+        logo: '/images/logo/gizmo-camera-mark.svg',
+        logoDark: '/images/logo/gizmo-camera-mark-dark.svg',
         homePath: '/camera',
 
         // Pages of the dashboard, top to bottom in the sidebar and left to right in the bottom navigation ('wifi' is the page of the layer)
