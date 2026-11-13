@@ -10,6 +10,10 @@
         "camera": {
             "label": "Camera",
             "description": "Take snapshots and choose their quality"
+        },
+        "settings": {
+            "label": "Settings",
+            "description": "Device info, network and restart"
         }
     },
     "api": {
@@ -66,6 +70,9 @@
                 "guideLabel": "Guide for agents",
                 "hint": "AI agents on this network can see through the camera. To add it to Claude Code, run: {command}"
             }
+        },
+        "settings": {
+            "title": "Settings"
         }
     }
 }

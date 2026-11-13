@@ -10,6 +10,10 @@
         "camera": {
             "label": "Fotocamera",
             "description": "Scatta foto e scegline la qualità"
+        },
+        "settings": {
+            "label": "Impostazioni",
+            "description": "Info del dispositivo, rete e riavvio"
         }
     },
     "api": {
@@ -66,6 +70,9 @@
                 "guideLabel": "Guida per gli agenti",
                 "hint": "Gli agenti AI su questa rete possono vedere attraverso la fotocamera. Per aggiungerla a Claude Code, esegui: {command}"
             }
+        },
+        "settings": {
+            "title": "Impostazioni"
         }
     }
 }

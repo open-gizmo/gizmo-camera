@@ -187,9 +187,6 @@ definePageMeta({
             <ListRow :label="t('pages.camera.agents.guideLabel')" :icon="BookOpen01Icon" action @click="handleAgentGuidePress" />
         </ListGroup>
 
-        <!-- Device info, network, restart and forget network (from the gizmo-common layer, it reads the device by itself) -->
-        <GizmoDeviceCard />
-
         <!-- Resolution picker -->
         <OptionPickerDialog :open="openPicker === 'resolution'" :title="t('pages.camera.resolution.label')" :description="t('pages.camera.resolution.note')" :options="resolutionOptions" :model-value="options.resolution" @update:model-value="handleResolutionSelect" @update:open="open => { if (!open) openPicker = ''; }" />
 

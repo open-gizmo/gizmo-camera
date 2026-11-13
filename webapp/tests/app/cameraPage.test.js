@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { getQuery } from 'h3';
 import { mountSuspended, registerEndpoint } from '@nuxt/test-utils/runtime';
 import CameraPage from '~/pages/camera.vue';
+import SettingsPage from '~/pages/settings.vue';
 import { captureSnapshot, loadCamera } from '~/composables/useCamera.js';
 import { useGlobalStore } from '~/composables/stores/useGlobalStore.js';
 
@@ -153,5 +154,22 @@ describe('camera page', () => {
         const wrapper = await mountSuspended(CameraPage);
         await vi.waitFor(() => expect(wrapper.text()).toContain('Camera not found'));
         expect(wrapper.text()).not.toContain('Take snapshot');
+    });
+});
+
+// Settings page: the device card of the layer, like in every OpenGizmo app
+describe('settings page', () => {
+    // The card of the layer reads GET /api/device by itself
+    it('shows the device card', async () => {
+        const wrapper = await mountSuspended(SettingsPage);
+        await vi.waitFor(() => expect(wrapper.text()).toContain('Restart'));
+        expect(wrapper.text()).toContain('Forget network');
+    });
+
+    // The camera page is only about the photos
+    it('keeps the device card off the camera page', async () => {
+        const wrapper = await mountSuspended(CameraPage);
+        await vi.waitFor(() => expect(wrapper.text()).toContain('AI agents'));
+        expect(wrapper.text()).not.toContain('Forget network');
     });
 });
