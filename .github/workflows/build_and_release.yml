@@ -39,6 +39,10 @@ jobs:
           fi
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
+      # Stop before anything is built or released if CHANGELOG.md has no notes for this version: they become the body of the GitHub release
+      - name: 📝 Read the release notes
+        run: python3 .github/scripts/release_notes.py --version "${{ steps.version.outputs.VERSION }}" --output release-notes.md
+
       # Stop before anything is released if the R2 secrets are missing: the upload comes last, after the version is tagged, and a tagged version can't be released again
       - name: 🔑 Check the R2 secrets
         env:
@@ -108,21 +112,30 @@ jobs:
       - name: 🗂️ Package firmware
         run: python .github/scripts/package_firmware.py --project-dir microcontroller --name "Gizmo Camera" --version "${{ steps.version.outputs.VERSION }}" --output-dir dist --build release:ESP32
 
+      # Write the body of the release: the notes of CHANGELOG.md, then how to flash it
+      - name: 🗒️ Write the release body
+        run: |
+          cat >> release-notes.md <<'EOF'
+
+          ---
+
+          Built from commit ${{ github.sha }}.
+
+          Flash it from the browser on https://opengizmo.dev/projects/gizmo-camera, or over USB:
+
+          ```bash
+          esptool.py --chip esp32 write_flash 0x1000 release-bootloader.bin 0x8000 release-partitions.bin 0xe000 release-boot_app0.bin 0x10000 release-firmware.bin
+          ```
+          EOF
+
       # Create a GitHub release with the flash parts
       - name: 📦 Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.VERSION }}
           name: Gizmo Camera ${{ steps.version.outputs.VERSION }}
+          body_path: release-notes.md
           generate_release_notes: true
-          body: |
-            Built from commit ${{ github.sha }}.
-
-            Flash it from the browser on https://opengizmo.dev/projects/gizmo-camera, or over USB:
-
-            ```bash
-            esptool.py --chip esp32 write_flash 0x1000 release-bootloader.bin 0x8000 release-partitions.bin 0xe000 release-boot_app0.bin 0x10000 release-firmware.bin
-            ```
           files: |
             dist/${{ steps.version.outputs.VERSION }}/*.bin
             dist/debug/*.elf
