@@ -3,7 +3,7 @@ name: Build & Release 📦
 on:
   workflow_dispatch:
 
-# The only lines that differ between the OpenGizmo gadgets: the rest of this file is the same in every one of them
+# The gadget's name and module (chip): each OpenGizmo gadget has its own copy of this workflow, the same apart from these lines
 env:
   GIZMO_NAME: Gizmo Camera
   GIZMO_SLUG: gizmo-camera

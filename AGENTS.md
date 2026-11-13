@@ -41,6 +41,6 @@ The firmware starts the camera while the PSRAM is free, then serves the web app 
 
 Follow "Releasing a new version" in the README. The version's notes must be moved from `## Unreleased` to a `## vX.Y.Z - YYYY-MM-DD` heading in CHANGELOG.md: they become the GitHub release notes, and the release workflow stops before building anything when they are missing or when notes are left under Unreleased.
 
-The release workflow is the same file in every OpenGizmo gadget: only the `env` block at its top (the gadget's name, folder and chip) differs. Change it in all of them together.
+Every OpenGizmo gadget has its own release workflow file, and they are kept the same apart from the gadget's name and module (chip), which sit in the `env` block at the top. When you change one, make the same change in the others.
 
 Work on the `feature` branch; changes reach `develop` and then `main` one step at a time, only for a release.
