@@ -3,6 +3,14 @@ name: Build & Release 📦
 on:
   workflow_dispatch:
 
+# The only lines that differ between the OpenGizmo gadgets: the rest of this file is the same in every one of them
+env:
+  GIZMO_NAME: Gizmo Camera
+  GIZMO_SLUG: gizmo-camera
+  CHIP_FAMILY: ESP32
+  ESPTOOL_CHIP: esp32
+  BOOTLOADER_OFFSET: '0x1000'
+
 jobs:
   build-and-release:
     name: Build & Release 📦
@@ -110,7 +118,7 @@ jobs:
 
       # Package the flash parts (bootloader, partition table, boot_app0, app) and the manifest of the browser flasher
       - name: 🗂️ Package firmware
-        run: python .github/scripts/package_firmware.py --project-dir microcontroller --name "Gizmo Camera" --version "${{ steps.version.outputs.VERSION }}" --output-dir dist --build release:ESP32
+        run: python .github/scripts/package_firmware.py --project-dir microcontroller --name "$GIZMO_NAME" --version "${{ steps.version.outputs.VERSION }}" --output-dir dist --build "release:$CHIP_FAMILY"
 
       # Write the body of the release: the notes of CHANGELOG.md, then how to flash it
       - name: 🗒️ Write the release body
@@ -121,10 +129,10 @@ jobs:
 
           Built from commit ${{ github.sha }}.
 
-          Flash it from the browser on https://opengizmo.dev/projects/gizmo-camera, or over USB:
+          Flash it from the browser on https://opengizmo.dev/projects/${{ env.GIZMO_SLUG }}, or over USB:
 
           ```bash
-          esptool.py --chip esp32 write_flash 0x1000 release-bootloader.bin 0x8000 release-partitions.bin 0xe000 release-boot_app0.bin 0x10000 release-firmware.bin
+          esptool.py --chip ${{ env.ESPTOOL_CHIP }} write_flash ${{ env.BOOTLOADER_OFFSET }} release-bootloader.bin 0x8000 release-partitions.bin 0xe000 release-boot_app0.bin 0x10000 release-firmware.bin
           ```
           EOF
 
@@ -133,7 +141,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.VERSION }}
-          name: Gizmo Camera ${{ steps.version.outputs.VERSION }}
+          name: ${{ env.GIZMO_NAME }} ${{ steps.version.outputs.VERSION }}
           body_path: release-notes.md
           generate_release_notes: true
           files: |
@@ -155,7 +163,7 @@ jobs:
           VERSION: ${{ steps.version.outputs.VERSION }}
         run: |
           # The parts of a version never change, so they can be cached for ever
-          aws s3 cp "dist/$VERSION" "s3://$R2_BUCKET/gizmo-camera/$VERSION" --recursive --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=31536000, immutable" --content-type application/octet-stream
+          aws s3 cp "dist/$VERSION" "s3://$R2_BUCKET/$GIZMO_SLUG/$VERSION" --recursive --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=31536000, immutable" --content-type application/octet-stream
 
           # The manifest points the flasher to the new version, so it goes last and is cached for a minute only (the website offers the release within a minute, with no CDN purge)
-          aws s3 cp dist/manifest.json "s3://$R2_BUCKET/gizmo-camera/manifest.json" --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=60" --content-type application/json
+          aws s3 cp dist/manifest.json "s3://$R2_BUCKET/$GIZMO_SLUG/manifest.json" --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=60" --content-type application/json
