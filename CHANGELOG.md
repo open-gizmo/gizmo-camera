@@ -4,6 +4,8 @@ What changed in each release. New notes go under **Unreleased** while the work i
 
 ## Unreleased
 
+## v1.1.0 - 2026-11-14
+
 - The **Flash** switch on the Camera page now says that the flash fires during the snapshot: switching it on doesn't light the LED by itself, the next snapshot does. Flash the new firmware to see the hint.
 - The **Device** tab shows the address that opens the device (`gizmo-camera.local`). It showed the Wi-Fi's default name (`esp32-XXXXXX.local`), which doesn't open it.
 - The router lists the device by its name (`gizmo-camera`) instead of `esp32-XXXXXX`.
