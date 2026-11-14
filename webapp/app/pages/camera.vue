@@ -173,7 +173,7 @@ definePageMeta({
             <ListGroup :title="t('pages.camera.optionsTitle')" :hint="t('pages.camera.optionsHint', { sensor: camera.sensor })">
                 <ListRow :label="t('pages.camera.resolution.label')" :icon="AspectRatioIcon" :value="options.resolution" action @click="openPicker = 'resolution'" />
                 <ListRow :label="t('pages.camera.quality.label')" :icon="ImageCompositionIcon" :value="selectedQualityLabel" action @click="openPicker = 'quality'" />
-                <ListRow v-if="camera.hasFlash" :label="t('pages.camera.flash.label')" :icon="FlashIcon" label-for="flash">
+                <ListRow v-if="camera.hasFlash" :label="t('pages.camera.flash.label')" :description="t('pages.camera.flash.description')" :icon="FlashIcon" label-for="flash">
                     <template #trailing>
                         <Switch id="flash" v-model="options.flash" />
                     </template>

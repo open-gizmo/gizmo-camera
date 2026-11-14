@@ -4,6 +4,8 @@ What changed in each release. New notes go under **Unreleased** while the work i
 
 ## Unreleased
 
+- The **Flash** switch on the Camera page now says that the flash fires during the snapshot: switching it on doesn't light the LED by itself, the next snapshot does. Flash the new firmware to see the hint.
+
 ## v1.0.0 - 2026-11-13
 
 The first release of Gizmo Camera: an AI Thinker ESP32-CAM that answers every request with a fresh photo.

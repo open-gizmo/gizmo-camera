@@ -57,7 +57,8 @@
                 "lowMeta": "File più piccoli, visibilmente meno nitida"
             },
             "flash": {
-                "label": "Flash"
+                "label": "Flash",
+                "description": "Si accende durante lo scatto"
             },
             "unavailableTitle": "Fotocamera non trovata",
             "unavailableDescription": "Il sensore della fotocamera non si è avviato. Controlla che il cavo flat sia inserito fino in fondo e bloccato, poi riavvia il dispositivo.",

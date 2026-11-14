@@ -57,7 +57,8 @@
                 "lowMeta": "Smallest files, visibly softer"
             },
             "flash": {
-                "label": "Flash"
+                "label": "Flash",
+                "description": "Fires during the snapshot"
             },
             "unavailableTitle": "Camera not found",
             "unavailableDescription": "The camera sensor didn't start. Check that its ribbon cable is fully inserted and locked, then restart the device.",
