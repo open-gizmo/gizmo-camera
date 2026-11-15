@@ -4,6 +4,8 @@ What changed in each release. New notes go under **Unreleased** while the work i
 
 ## Unreleased
 
+- The printed enclosure has a bigger micro-USB opening (12 × 8 mm instead of 10 × 5 mm) and a matching notch in the back plate, so cables with a thick plug reach the port. Reprint the shell and the back plate to get it; the firmware does not change.
+
 ## v1.1.0 - 2026-11-14
 
 - The **Flash** switch on the Camera page now says that the flash fires during the snapshot: switching it on doesn't light the LED by itself, the next snapshot does. Flash the new firmware to see the hint.
