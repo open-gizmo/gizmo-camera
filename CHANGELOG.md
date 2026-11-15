@@ -5,6 +5,7 @@ What changed in each release. New notes go under **Unreleased** while the work i
 ## Unreleased
 
 - The printed enclosure has a bigger micro-USB opening (12 × 8 mm instead of 10 × 5 mm) and a matching notch in the back plate, so cables with a thick plug reach the port. Reprint the shell and the back plate to get it; the firmware does not change.
+- The ball socket on the back plate grips the stand's ball harder (0.15 mm instead of 0.10 mm per side), so the camera stays where you turn it even after the joint has worn in. Reprint the back plate to get it.
 
 ## v1.1.0 - 2026-11-14
 
