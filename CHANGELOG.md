@@ -7,6 +7,7 @@ What changed in each release. New notes go under **Unreleased** while the work i
 - The printed enclosure has a bigger micro-USB opening (12 × 8 mm instead of 10 × 5 mm) and a matching notch in the back plate, so cables with a thick plug reach the port. Reprint the shell and the back plate to get it; the firmware does not change.
 - The ball socket on the back plate grips the stand's ball harder (0.15 mm instead of 0.10 mm per side), so the camera stays where you turn it even after the joint has worn in. Reprint the back plate to get it.
 - The lens window in the front of the enclosure is bigger (14 mm instead of 12 mm), growing towards the microSD end only, so it frames the lens with more room. Reprint the shell to get it.
+- gizmo-common v2.6.0: the Wi-Fi setup page can no longer report a wrong password by mistake right after you send one, and the Wi-Fi status stops saying "connected" as soon as the network drops. Flash the new firmware to get it.
 
 ## v1.1.0 - 2026-11-14
 
