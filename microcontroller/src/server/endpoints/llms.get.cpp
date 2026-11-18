@@ -1,5 +1,5 @@
 #include "../server.h"
-#include "../../mcp/agent_guide.h"
+#include "../../guide/agent_guide.h"
 
 namespace {
 	// Write a piece of the guide into the response

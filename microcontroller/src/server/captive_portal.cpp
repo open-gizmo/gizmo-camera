@@ -2,7 +2,7 @@
 #include <gizmo/wifi_setup.h>
 #include "server.h"
 #include "../webui/generated_assets.h"
-#include "../mcp/agent_guide.h"
+#include "../guide/agent_guide.h"
 
 namespace {
 	// Read the Accept header of a request (nullptr if it has none)

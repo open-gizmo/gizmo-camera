@@ -236,7 +236,8 @@ The firmware is split into focused modules under `microcontroller/src/`:
 
 - 📷 `camera/` starts the sensor and takes snapshots (`camera.*`), with the resolutions and the reading of the request options kept hardware-free in `capture_options.*`. The pins are in `camera_pins.h`.
 - ⚙️ `config/` holds the project name and the shared web server.
-- 🤖 `mcp/` is the MCP server (`mcp_protocol.*`), the base64 encoder that streams the photo into its results (`base64_stream.*`), and the guide for agents (`agent_guide.*`), all hardware-free.
+- 🤖 `mcp/` is the MCP server (`mcp_protocol.*`) and the base64 encoder that streams the photo into its results (`base64_stream.*`), both hardware-free.
+- 📖 `guide/` writes the Markdown guide for AI agents (`agent_guide.*`), hardware-free.
 - 🌐 `server/` exposes the embedded HTTP routes (`/api/camera`, `/api/capture`, `/mcp`, `/llms.txt`, and the web app).
 - 🧾 `serial/` turns on the serial log in the debug build.
 - 🔌 `wifi/` gives the camera's names to the shared Wi-Fi setup.
@@ -372,7 +373,7 @@ The device is configured through its embedded web UI and local network flow.
 - `microcontroller/src/camera/capture_options.h` for the resolutions and the quality range.
 - `microcontroller/src/server/endpoints/` for the camera API, the MCP endpoint and the guide for agents.
 - `microcontroller/src/mcp/mcp_protocol.cpp` for the MCP server: its versions, tools and errors.
-- `microcontroller/src/mcp/agent_guide.cpp` for the Markdown guide for agents.
+- `microcontroller/src/guide/agent_guide.cpp` for the Markdown guide for agents.
 - `webapp/app/composables/useDeviceApi.js` for browser-to-device communication.
 
 ### Releasing a new version

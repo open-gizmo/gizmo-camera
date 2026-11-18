@@ -2,7 +2,7 @@
 #include <string.h>
 #include <string>
 
-#include "mcp/agent_guide.h"
+#include "guide/agent_guide.h"
 
 namespace {
 	// Collect the pieces of the guide into a string
