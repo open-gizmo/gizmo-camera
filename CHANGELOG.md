@@ -4,6 +4,8 @@ What changed in each release. New notes go under **Unreleased** while the work i
 
 ## Unreleased
 
+- gizmo-common v2.7.0: when the device sends an answer the web app can't read, it now shows an error ("The device sent an answer the app could not read.") instead of carrying on with empty values. Flash the new firmware to get it.
+
 ## v1.1.1 - 2026-11-18
 
 - The printed enclosure has a bigger micro-USB opening (12 × 8 mm instead of 10 × 5 mm) and a matching notch in the back plate, so cables with a thick plug reach the port. Reprint the shell and the back plate to get it; the firmware does not change.

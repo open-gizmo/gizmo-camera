@@ -3,7 +3,7 @@
 // Fetch what the camera can do: its sensor, resolutions, quality range and flash
 export const getCamera = async () => {
     const response = await fetchEsp('/api/camera');
-    return response.data || {};
+    return readData(response);
 };
 
 // Read the JSON error the device sends with a failed snapshot (the request asks for an image, so the error arrives as a blob that handleBackendErrors can't read)
