@@ -26,7 +26,7 @@
 		"test": "vitest run"
 	},
 	"dependencies": {
-		"@brumaombra/ui-vintage": "0.9.51",
+		"@brumaombra/ui-vintage": "0.9.52",
 		"@hugeicons/core-free-icons": "4.3.5",
 		"@hugeicons/vue": "1.0.8",
 		"@nuxtjs/i18n": "10.6.0",
