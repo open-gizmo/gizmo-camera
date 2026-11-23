@@ -44,4 +44,4 @@ Follow "Releasing a new version" in the README. The version's notes must be move
 
 Every OpenGizmo gadget has its own release workflow file, and they are kept the same apart from the gadget's name and module (chip), which sit in the `env` block at the top. When you change one, make the same change in the others.
 
-Work on the `feature` branch; changes reach `develop` and then `main` one step at a time, only for a release.
+Work on a branch made from `develop`, and open a pull request into `develop`; changes reach `main` from there one step at a time, only for a release.
