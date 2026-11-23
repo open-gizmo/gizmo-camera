@@ -72,12 +72,12 @@ Under the hood, every snapshot is a plain `GET /api/capture` request that return
 				<img src="docs/screenshot-snapshot.png" alt="Snapshot screen" width="180">
 			</td>
 			<td align="center" valign="top">
-				<img src="docs/screenshot-wifi.png" alt="WiFi setup screen" width="180">
+				<img src="docs/screenshot-wifi.png" alt="Wi-Fi setup screen" width="180">
 			</td>
 		</tr>
 	</table>
 	<p>
-		<sub>Camera, snapshot, and WiFi setup screens (the web app's development server, with a test card instead of a photo)</sub>
+		<sub>Camera, snapshot, and Wi-Fi setup screens (the web app's development server, with a test card instead of a photo)</sub>
 	</p>
 </div>
 
