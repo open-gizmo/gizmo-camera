@@ -153,7 +153,7 @@ If you want to build and flash everything yourself, follow this path:
 	npm run build:embedded
 	```
 
-	This runs the Nuxt static build, then the `gizmo-embed` tool from [gizmo-common](https://github.com/open-gizmo/gizmo-common) turns it into gzipped C++ assets for the firmware. Re-run it any time you change the web UI, translated labels, or embedded pages.
+	This runs the Nuxt static build, then the `gizmo-embed` tool from [gizmo-common](https://github.com/open-gizmo/gizmo-common) turns it into gzipped C++ assets for the firmware. Re-run it any time you change the web UI, translated labels, or embedded pages. [docs/embedded-webui.md](docs/embedded-webui.md) explains the whole pipeline and the files it writes.
 
 3. **Build the microcontroller code.**
 
