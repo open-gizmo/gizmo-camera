@@ -82,6 +82,18 @@ describe('locales', () => {
         expect(Object.keys(englishTexts).filter(key => key.startsWith('gizmo.') && !(key in layerTexts))).toEqual([]);
     });
 
+    // Every error the mock device sends has a translation, except its own mock_ ones that the real device never sends (otherwise the dialog shows the raw message, like "brightness")
+    it('translates every error ID of the mock device', () => {
+        const errorIds = new Set();
+        for (const file of readSourceFiles(join(process.cwd(), 'server'))) {
+            const source = readFileSync(file, 'utf8');
+            for (const match of source.matchAll(/new EspMockError\(\d+,\s*'([a-z_]+)'/g)) errorIds.add(match[1]);
+            for (const match of source.matchAll(/errorId:\s*'([a-z_]+)'/g)) errorIds.add(match[1]);
+        }
+        expect(errorIds.size).toBeGreaterThan(0);
+        expect([...errorIds].filter(errorId => !errorId.startsWith('mock_')).filter(errorId => !(`api.backendErrors.${errorId}` in englishTexts))).toEqual([]);
+    });
+
     // Every error the device can send has a translation, in the app or in the layer (otherwise the dialog shows the raw message, like "ssid")
     it('translates every error ID of the device', () => {
         const root = join(process.cwd(), '..', 'microcontroller');
