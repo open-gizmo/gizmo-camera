@@ -2,6 +2,11 @@ name: Build & Release 📦
 
 on:
   workflow_dispatch:
+    inputs:
+      datasheet-only:
+        description: Only build and upload the datasheet of the latest release (when its data changed in gizmo-docs)
+        type: boolean
+        default: false
 
 # The gadget's name and module (chip): each OpenGizmo gadget has its own copy of this workflow, the same apart from these lines
 env:
@@ -14,8 +19,8 @@ env:
 jobs:
   build-and-release:
     name: Build & Release 📦
-    # Release only from main (the release goes live on the website flasher)
-    if: github.ref == 'refs/heads/main'
+    # Release only from main (the release goes live on the website flasher), and not when only the datasheet is asked for
+    if: github.ref == 'refs/heads/main' && !inputs.datasheet-only
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -167,3 +172,66 @@ jobs:
 
           # The manifest points the flasher to the new version, so it goes last and is cached for a minute only (the website offers the release within a minute, with no CDN purge)
           aws s3 cp dist/manifest.json "s3://$R2_BUCKET/$GIZMO_SLUG/manifest.json" --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=60" --content-type application/json
+
+  # The datasheet of the release: built from the data in gizmo-docs and this firmware (its pins checked against it), then uploaded next to the firmware for the website's datasheet card.
+  # It runs after a release, or alone with the datasheet-only option (when its data changed in gizmo-docs), for the latest released version. A failure here never undoes the release: run the workflow again with datasheet-only.
+  datasheet:
+    name: Datasheet 📄
+    needs: build-and-release
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && (needs.build-and-release.result == 'success' || (inputs.datasheet-only && needs.build-and-release.result == 'skipped')) }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      # Checkout repository (with tags, to find the latest release)
+      - name: 🚚 Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # Switch to the latest release, the version the datasheet shows (the release job tagged it on GitHub, so fetch the tags again)
+      - name: 🏷️ Check out the latest release
+        run: |
+          git fetch --tags --force
+          VERSION=$(git describe --tags --abbrev=0 origin/main)
+          git checkout --quiet "$VERSION"
+          echo "The datasheet of $VERSION"
+
+      # The datasheet data and the tool (gizmo-docs is private: the GIZMO_DOCS_TOKEN secret is a token that can read it; once gizmo-docs is public, the workflow's own token is enough)
+      - name: 📚 Checkout gizmo-docs
+        uses: actions/checkout@v6
+        with:
+          repository: open-gizmo/gizmo-docs
+          ref: main
+          path: gizmo-docs
+          token: ${{ secrets.GIZMO_DOCS_TOKEN || github.token }}
+
+      # Set up Node.js
+      - name: 🧰 Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.21.0'
+
+      # The tool prints the PDF with Playwright's Chromium (the same version as the machines the datasheets are made on)
+      - name: 🎭 Install Playwright
+        working-directory: gizmo-docs
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.63.0
+          npx playwright install --with-deps chromium
+
+      # Build the PDF, with the pins checked against this firmware
+      - name: 📄 Build the datasheet
+        run: node gizmo-docs/tools/datasheet/build.mjs "gizmo-docs/projects/$GIZMO_SLUG" --firmware .
+
+      # Upload it where the website's datasheet card links to (cached for an hour, like the other datasheets)
+      - name: ☁️ Upload the datasheet to R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          AWS_REQUEST_CHECKSUM_CALCULATION: when_required # R2 refuses some checksums the AWS CLI sends by default
+          AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+          R2_ENDPOINT: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+        run: aws s3 cp "gizmo-docs/build/$GIZMO_SLUG/$GIZMO_SLUG-datasheet.pdf" "s3://$R2_BUCKET/$GIZMO_SLUG/$GIZMO_SLUG-datasheet.pdf" --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=3600" --content-type application/pdf
