@@ -24,7 +24,7 @@ describe('pages of the layer', () => {
         expect(items.map(item => [item.id, item.label, item.to])).toEqual([
             ['camera', 'Camera', '/camera'],
             ['device', 'Device', '/device'],
-            ['wifi', 'WiFi', '/wifi']
+            ['wifi', 'Wi-Fi', '/wifi']
         ]);
     });
 

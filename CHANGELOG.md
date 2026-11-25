@@ -5,6 +5,7 @@ What changed in each release. New notes go under **Unreleased** while the work i
 ## Unreleased
 
 - gizmo-common v2.7.0: when the device sends an answer the web app can't read, it now shows an error ("The device sent an answer the app could not read.") instead of carrying on with empty values. Flash the new firmware to get it.
+- gizmo-common v2.7.1: the web app writes "Wi-Fi" instead of "WiFi", on the tab and on the Wi-Fi setup page. Flash the new firmware to get it.
 
 ## v1.1.1 - 2026-11-18
 
