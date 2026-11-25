@@ -171,8 +171,8 @@ jobs:
           # The parts of a version never change, so they can be cached for ever
           aws s3 cp "dist/$VERSION" "s3://$R2_BUCKET/$GIZMO_SLUG/$VERSION" --recursive --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=31536000, immutable" --content-type application/octet-stream
 
-          # The releases of the website, cached for a minute like the manifest (the next website build shows them)
-          aws s3 cp releases.json "s3://$R2_BUCKET/$GIZMO_SLUG/releases.json" --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=60" --content-type application/json
+          # Every release of the changelog, for the website, in the folder of the version: it never changes either (the website finds it through the manifest)
+          aws s3 cp releases.json "s3://$R2_BUCKET/$GIZMO_SLUG/$VERSION/releases.json" --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=31536000, immutable" --content-type application/json
 
           # The manifest points the flasher to the new version, so it goes last and is cached for a minute only (the website offers the release within a minute, with no CDN purge)
           aws s3 cp dist/manifest.json "s3://$R2_BUCKET/$GIZMO_SLUG/manifest.json" --endpoint-url "$R2_ENDPOINT" --cache-control "public, max-age=60" --content-type application/json
