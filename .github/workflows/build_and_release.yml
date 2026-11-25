@@ -184,6 +184,16 @@ jobs:
       contents: read
 
     steps:
+      # Stop with a clear message if the deploy key of gizmo-docs is missing (the checkout would only say the repository was not found)
+      - name: 🔑 Check the gizmo-docs deploy key
+        env:
+          GIZMO_DOCS_DEPLOY_KEY: ${{ secrets.GIZMO_DOCS_DEPLOY_KEY }}
+        run: |
+          if [ -z "$GIZMO_DOCS_DEPLOY_KEY" ]; then
+            echo "The GIZMO_DOCS_DEPLOY_KEY secret is missing: add the private key of a read-only deploy key of gizmo-docs to the organization (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+
       # Checkout repository (with tags, to find the latest release)
       - name: 🚚 Checkout repository
         uses: actions/checkout@v6
@@ -198,14 +208,14 @@ jobs:
           git checkout --quiet "$VERSION"
           echo "The datasheet of $VERSION"
 
-      # The datasheet data and the tool (gizmo-docs is private: the GIZMO_DOCS_TOKEN secret is a token that can read it; once gizmo-docs is public, the workflow's own token is enough)
+      # The datasheet data and the tool, from gizmo-docs: a private repository, read with its deploy key (a read-only key of that repository only)
       - name: 📚 Checkout gizmo-docs
         uses: actions/checkout@v6
         with:
           repository: open-gizmo/gizmo-docs
           ref: main
           path: gizmo-docs
-          token: ${{ secrets.GIZMO_DOCS_TOKEN || github.token }}
+          ssh-key: ${{ secrets.GIZMO_DOCS_DEPLOY_KEY }}
 
       # Set up Node.js
       - name: 🧰 Set up Node.js
