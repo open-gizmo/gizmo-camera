@@ -1,6 +1,6 @@
 {
 	"name": "gizmo-camera",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "Gizmo Camera web app, the device configuration UI embedded in the ESP32 firmware.",
 	"homepage": "https://github.com/open-gizmo/gizmo-camera",
 	"bugs": {
